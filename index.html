@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moonlit Quotes 🌙</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#120f20;color:white;
+ font-family:Arial,sans-serif;text-align:center
+}
+header{padding:25px 10px;background:#25183b}
+h1{color:#e4b7ff}
+nav{padding:15px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+button{
+ background:#d9a7ff;color:#21152f;border:0;
+ padding:12px;border-radius:10px;cursor:pointer
+}
+main{max-width:650px;margin:auto;padding:15px}
+.card{background:#29213e;padding:20px;border-radius:16px;margin:15px 0}
+.wall{
+ min-height:180px;padding:25px;margin:15px 0;border-radius:16px;
+ background:linear-gradient(140deg,#603b83,#171329);
+ display:flex;flex-direction:column;justify-content:center
+}
+.quote{font-size:22px;color:#f0d9ff}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<header>
+<h1>🌙 Moonlit Quotes</h1>
+<p>Beautiful words for your beautiful soul 💜</p>
+</header>
+<nav>
+<button onclick="page('home')">Home 🏠</button>
+<button onclick="page('walls')">Wallpapers 🎨</button>
+<button onclick="page('poetry')">Urdu Poetry 💗</button>
+<button onclick="page('captions')">Captions ✨</button>
+</nav>
+<main>
+<section id="home">
+<div class="card">
+<h2>Welcome to Moonlit 🌙</h2>
+<p>Find quotes, poetry and beautiful wallpapers.</p>
+<button onclick="page('walls')">Explore Wallpapers</button>
+</div>
+<div class="card">
+<p class="quote">اپنی پہچان خود بناؤ ✨</p>
+<button onclick="copyText('اپنی پہچان خود بناؤ ✨')">Copy Quote</button>
+</div>
+</section>
+<section id="walls" class="hidden">
+<h2>🎨 Wallpapers</h2>
+<div class="wall" id="wall1">
+<h2>Dream Big 🌙</h2><p>Believe in your own light ✨</p>
+<button onclick="saveWall('Dream Big','Believe in your own light','#39245d','#100d20')">Save Wallpaper 📥</button>
+</div>
+<div class="wall" style="background:linear-gradient(140deg,#743e65,#24152f)">
+<h2>Stay Beautiful 🌸</h2><p>Be your own magic 💗</p>
+<button onclick="saveWall('Stay Beautiful','Be your own magic','#743e65','#24152f')">Save Wallpaper 📥</button>
+</div>
+<div class="wall" style="background:linear-gradient(140deg,#20515a,#121a30)">
+<h2>Keep Going ✨</h2><p>Your story is still being written.</p>
+<button onclick="saveWall('Keep Going','Your story is still being written','#20515a','#121a30')">Save Wallpaper 📥</button>
+</div>
+</section>
+<section id="poetry" class="hidden">
+<h2>💗 Urdu Poetry</h2>
+<div class="card"><p class="quote">دوستی ایک خوبصورت احساس ہے 💜</p>
+<button onclick="copyText('دوستی ایک خوبصورت احساس ہے 💜')">Copy Poetry</button></div>
+<div class="card"><p class="quote">خود سے محبت کرنا بھی ضروری ہے 🌸</p>
+<button onclick="copyText('خود سے محبت کرنا بھی ضروری ہے 🌸')">Copy Poetry</button></div>
+</section>
+<section id="captions" class="hidden">
+<h2>✨ Captions</h2>
+<div class="card"><p class="quote">Silent moves, beautiful dreams. 🌙</p>
+<button onclick="copyText('Silent moves, beautiful dreams. 🌙')">Copy Caption</button></div>
+<div class="card"><p class="quote">My vibe, my rules. 💜</p>
+<button onclick="copyText('My vibe, my rules. 💜')">Copy Caption</button></div>
+</section>
+</main>
+<p>Made with 💜 by Moonlit Quotes</p>
+<script>
+function page(id){
+ document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
+ document.getElementById(id).classList.remove('hidden');
+}
+function copyText(t){
+ if(navigator.clipboard){
+ navigator.clipboard.writeText(t).then(()=>alert('Copied! 💜'))
+ .catch(()=>alert('Copy is unavailable here. Please try again.'));
+ }else{alert('Copy is unavailable here.');}
+}
+function saveWall(title,quote,c1,c2){
+ const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="600" height="1000">
+ <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+ <stop offset="0%" stop-color="${c1}"/><stop offset="100%" stop-color="${c2}"/>
+ </linearGradient></defs><rect width="100%" height="100%" fill="url(#g)"/>
+ <text x="300" y="420" font-size="42" fill="#f0d9ff" text-anchor="middle">${title}</text>
+ <text x="300" y="500" font-size="28" fill="white" text-anchor="middle">${quote}</text>
+ <text x="300" y="900" font-size="24" fill="#e4b7ff" text-anchor="middle">Moonlit Quotes</text></svg>`;
+ const url=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));
+ const a=document.createElement('a');a.href=url;
+ a.download=title.replace(/\s+/g,'-')+'.svg';a.click();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+</script>
+</body>
+</html>
